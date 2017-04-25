@@ -46,6 +46,7 @@ define(["qlik", "./util", "./properties"], function (qlik, util, prop) {
         initialProperties: prop.initialProperties,
         definition: prop.definition,
         paint: function ($element, layout) {
+            var myApp = qlik.currApp();
             var wrapper = util.createElement('div', layout.style || 'qlik'),
                 width = getWidth(layout),
                 ext = this;
@@ -54,7 +55,8 @@ define(["qlik", "./util", "./properties"], function (qlik, util, prop) {
                     var btn = util.createElement('button', getClass(layout.style, 'button',
                         alt.value === layout.variableValue), alt.label);
                     btn.onclick = function () {
-                        qlik.currApp(ext).variable.setContent(layout.variableName, alt.value);
+                        //qlik.currApp(ext).variable.setContent(layout.variableName, alt.value);
+                        myApp.variable.setStringValue(layout.variableName, alt.value);
                     };
                     btn.style.width = width;
                     wrapper.appendChild(btn);
@@ -69,7 +71,8 @@ define(["qlik", "./util", "./properties"], function (qlik, util, prop) {
                     sel.appendChild(opt);
                 });
                 sel.onchange = function () {
-                    qlik.currApp(ext).variable.setContent(layout.variableName, this.value);
+                    //qlik.currApp(ext).variable.setContent(layout.variableName, this.value);
+                    myApp.variable.setStringValue(layout.variableName, this.value);
                 };
                 wrapper.appendChild(sel);
             } else if (layout.render === 'l') {
@@ -88,7 +91,8 @@ define(["qlik", "./util", "./properties"], function (qlik, util, prop) {
                     } else {
                         this.title = this.value;
                     }
-                    qlik.currApp(ext).variable.setContent(layout.variableName, this.value);
+                    //qlik.currApp(ext).variable.setContent(layout.variableName, this.value);
+                    myApp.variable.setStringValue(layout.variableName, this.value);
                 };
                 range.oninput = function () {
                     if (this.label) {
@@ -114,7 +118,8 @@ define(["qlik", "./util", "./properties"], function (qlik, util, prop) {
                 fld.type = 'text';
                 fld.value = layout.variableValue;
                 fld.onchange = function () {
-                    qlik.currApp(ext).variable.setContent(layout.variableName, this.value);
+                    //qlik.currApp(ext).variable.setContent(layout.variableName, this.value);
+                    myApp.variable.setStringValue(layout.variableName, this.value);
                 };
                 wrapper.appendChild(fld);
             }
